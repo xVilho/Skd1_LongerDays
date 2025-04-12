@@ -3,7 +3,7 @@ using UnityEngine;
 using Il2CppScheduleOne.GameTime;
 using Il2CppFishNet.Object; // Needed for IsServer (used by FishNet networking)
 
-[assembly: MelonInfo(typeof(LongerDaysMod), "LongerDays", "1.0.0", "YourName")]
+[assembly: MelonInfo(typeof(LongerDaysMod), "LongerDays", "1.0.1", "xVilho")]
 
 public class LongerDaysMod : MelonMod
 {
