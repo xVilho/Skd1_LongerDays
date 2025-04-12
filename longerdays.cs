@@ -1,21 +1,38 @@
 ﻿using MelonLoader;
-using Il2CppScheduleOne.GameTime;
 using UnityEngine;
+using Il2CppScheduleOne.GameTime;
+using Il2CppFishNet.Object; // Needed for IsServer (used by FishNet networking)
 
-[assembly: MelonInfo(typeof(LongerDaysMod), "LongerDays", "1.0.0", "xVilho")]
+[assembly: MelonInfo(typeof(LongerDaysMod), "LongerDays", "1.0.0", "YourName")]
 
 public class LongerDaysMod : MelonMod
 {
-    public override void OnSceneWasInitialized(int buildIndex, string sceneName)
-    {
-        TimeManager timeManager = Object.FindObjectOfType<TimeManager>();
-        if (timeManager == null)
-        {
-            MelonLogger.Warning("TimeManager not found.");
-            return;
-        }
+    private TimeManager timeManager = null;
+    private bool attemptedInit = false;
 
-        timeManager.TimeProgressionMultiplier = 0.5f;
-        MelonLogger.Msg("TimeProgressionMultiplier set to 0.5 (2x longer days)");
+    public override void OnUpdate()
+    {
+        // Only try to find TimeManager once to avoid performance issues
+        if (!attemptedInit)
+        {
+            timeManager = Object.FindObjectOfType<TimeManager>();
+            attemptedInit = true;
+
+            if (timeManager == null)
+            {
+                MelonLogger.Warning("⏳ TimeManager not found yet.");
+                return;
+            }
+
+            if (timeManager.IsServer)
+            {
+                timeManager.TimeProgressionMultiplier = 0.5f;
+                MelonLogger.Msg("⏳ Time slowed down to 0.5x (host only)");
+            }
+            else
+            {
+                MelonLogger.Msg("🧭 Client detected – will not modify time.");
+            }
+        }
     }
 }
