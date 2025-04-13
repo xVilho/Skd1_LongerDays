@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <OutputType>Library</OutputType>
     <PlatformTarget>x64</PlatformTarget> <!-- Fix architecture mismatch -->
-    <AssemblyName>LongerDays</AssemblyName>
+    <AssemblyName>longerdays</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
